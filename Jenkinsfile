@@ -20,7 +20,7 @@ pipeline {
             steps {            
                 script {
                     env.PY = isUnix() ? 'python3' : 'python'
-                    env.VPY = isUnix() ? '.ci-venv/bin/python' : '.ci-vevnv\\Scripts\\python'
+                    env.VPY = isUnix() ? '.ci-venv/bin/python' : '.ci-venv\\Scripts\\python'
                 }
                 echo "빌드 ${env.BUILD_NUMBER} - 커밋 ${env.GIT_COMMIT}"
             }
@@ -37,18 +37,18 @@ pipeline {
         stage('Syntax Check') {       
             steps {            
                 // py_complie app.py   deploy.py <- 문법 적용
-                runCmd "${env.PY} -m py_complie app.py deploy.py"       
+                runCmd "${env.VPY} -m py_compile app.py deploy.py"       
             }
         }
         stage('Test') {       
             steps {            
                 // pytest 실행
-                runCmd "${env.PY} -m pytest -v"
+                runCmd "${env.VPY} -m pytest -v"
             }
         }
         stage('Deploy') {       
             steps {            
-                runCmd "${env.PY} deloy.py"
+                runCmd "${env.VPY} deloy.py"
             }
         }
     }
